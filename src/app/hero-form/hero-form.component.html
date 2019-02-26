@@ -9,11 +9,23 @@
         <input type="text" class="form-control" id="name"
                required
                [(ngModel)]="model.name" name="name"
-               #name="ngModel">
-        <div [hidden]="name.valid || name.pristine"
-             class="alert alert-danger">
-          Name is required
+               #name="ngModel" minlength="4" appForbiddenName="bobb">
+        
+        <div *ngIf="name.valid && (name.dirty || name.touched)"
+              class="alert alert-danger" >
+            <div *ngIf="name.errors?.required">
+              <p>Name is required</p> 
+            </div> 
+          
+            <div *ngIf="name.errors?.minlength">
+            <p>Name must be at least 4 characters long.</p> 
+            </div> 
+          
+            <div *ngIf="name.errors?.forbiddenName">
+            <p>Name cannot be Bob</p> 
+            </div> 
         </div>
+
       </div>
  
       <div class="form-group">
